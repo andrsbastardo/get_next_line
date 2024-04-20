@@ -5,79 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastard <abastard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/13 17:41:34 by abastard          #+#    #+#             */
-/*   Updated: 2024/04/13 18:04:22 by abastard         ###   ########.fr       */
+/*   Created: 2021/08/16 10:12:14 by ajordan-          #+#    #+#             */
+/*   Updated: 2024/04/20 16:35:15 by abastard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
 #include "get_next_line.h"
+#include <unistd.h>
+/* #include <stdio.h>
+#include <fcntl.h> */
 
-static char	*read_fd(int fd, char *buffer, char *prev_line)
+char	*ft_read(int fd, char *text)
 {
-	int		i;
-	char	*line;
+	char	*buff;
+	int		rd_bytes;
 
-	i = 1;
-	while (i)
-	{
-		i = read(fd, buffer, BUFFER_SIZE);
-		if (i == -1)
-			return (NULL);
-		else if (i == 0)
-			break ;
-		if (!prev_line)
-			prev_line = ft_strdup("");
-		line = prev_line;
-		prev_line = ft_strjoin(line, buffer);
-		free(line);
-		line = NULL;
-		if (!prev_line)
-			return (NULL);
-		if (ft_strchr(buffer, '\n'))
-			break ;
-	}
-	return (prev_line);
-}
-
-static char	*process_liney(char *line)
-{
-	size_t	i;
-	char	*res;
-
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	if (line[i] == '\0')
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char)); //El error esta aqui
+	if (!buff)
 		return (NULL);
-	res = ft_substr(line, i + 1, ft_strlen(line) - i);
-	if (!res)
+	rd_bytes = 1;
+	while (!ft_strchr(text, '\n') && rd_bytes != 0)
 	{
-		free(res);
-		res = NULL;
+		rd_bytes = read(fd, buff, BUFFER_SIZE);
+		if (rd_bytes == -1)
+		{
+			free(buff);
+			return (NULL);
+		}
+		buff[rd_bytes] = '\0';
+		text = ft_strjoin(text, buff);
 	}
-	line[i + 1] = '\0';
-	return (res);
+	free(buff);
+	return (text);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*line;
-	char		*buffer;
-	static char	*prev_line;
+	static char	*leftovers;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	leftovers = ft_read(fd, leftovers);
+	if (!leftovers)
 		return (NULL);
-	buffer = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	line = read_fd(fd, buffer, prev_line);
-	free(buffer);
-	buffer = NULL;
-	if (!line)
-		return (NULL);
-	prev_line = process_liney(line);
+	line = ft_get_line(leftovers);
+	leftovers = ft_leftovers(leftovers);
 	return (line);
 }
-
+/* 
+int	main(void)
+{
+	char	*line;
+	int		i;
+	int		fd1;
+	int		fd2;
+	int		fd3;
+	fd1 = open("tests/test.txt", O_RDONLY);
+	fd2 = open("tests/test2.txt", O_RDONLY);
+	fd3 = open("tests/test3.txt", O_RDONLY);
+	i = 1;
+	while (i < 7)
+	{
+		line = get_next_line(fd1);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd2);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd3);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		i++;
+	}
+	close(fd1);
+	close(fd2);
+	close(fd3);
+	return (0);
+}
+ */

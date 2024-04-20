@@ -5,30 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastard <abastard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/13 17:39:19 by abastard          #+#    #+#             */
-/*   Updated: 2024/04/13 17:42:37 by abastard         ###   ########.fr       */
+/*   Created: 2021/08/16 10:12:35 by ajordan-          #+#    #+#             */
+/*   Updated: 2024/04/20 16:05:49 by abastard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# include <stdlib.h>
+
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 1000
 # endif
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdint.h>
-
-/*Main function*/
 char	*get_next_line(int fd);
-
-/*Auxiliary functions */
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *s, int c);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_read(int fd, char *left_str);
+char	*ft_strchr(char *s, int c);
+char	*ft_strjoin(char *left_str, char *buff);
+size_t	ft_strlen(char *s);
+char	*ft_get_line(char *left_str);
+char	*ft_leftovers(char *left_str);
 
 #endif
