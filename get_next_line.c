@@ -6,7 +6,7 @@
 /*   By: abastard <abastard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 10:12:14 by ajordan-          #+#    #+#             */
-/*   Updated: 2024/04/20 16:35:15 by abastard         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:27:58 by abastard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 #include <unistd.h>
 /* #include <stdio.h>
 #include <fcntl.h> */
+
+char	*ft_strdup(char *s)
+{
+	char	*str;
+	char	*dest;
+	int		i;
+
+	i = 0;
+	str = (char *)s;
+	dest = (char *)malloc(ft_strlen(str) + 1);
+	if (!dest)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		dest[i] = str[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
 
 char	*ft_read(int fd, char *text)
 {
@@ -29,6 +49,8 @@ char	*ft_read(int fd, char *text)
 		rd_bytes = read(fd, buff, BUFFER_SIZE);
 		if (rd_bytes == -1)
 		{
+			if (text)
+				free(text);
 			free(buff);
 			return (NULL);
 		}
@@ -53,19 +75,19 @@ char	*get_next_line(int fd)
 	leftovers = ft_leftovers(leftovers);
 	return (line);
 }
-/* 
-int	main(void)
+
+/* int	main(void)
 {
 	char	*line;
 	int		i;
 	int		fd1;
 	int		fd2;
 	int		fd3;
-	fd1 = open("tests/test.txt", O_RDONLY);
-	fd2 = open("tests/test2.txt", O_RDONLY);
-	fd3 = open("tests/test3.txt", O_RDONLY);
+	fd1 = open("get_next_line.c", O_RDONLY);
+	fd2 = open("get_next_line.h", O_RDONLY);
+	fd3 = open("get_next_line_utils.c", O_RDONLY);
 	i = 1;
-	while (i < 7)
+	while (i < 800)
 	{
 		line = get_next_line(fd1);
 		printf("line [%02d]: %s", i, line);
@@ -82,5 +104,4 @@ int	main(void)
 	close(fd2);
 	close(fd3);
 	return (0);
-}
- */
+} */

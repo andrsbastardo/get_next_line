@@ -6,7 +6,7 @@
 /*   By: abastard <abastard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 10:12:58 by ajordan-          #+#    #+#             */
-/*   Updated: 2024/04/20 16:33:32 by abastard         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:13:07 by abastard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,18 @@ char	*ft_strjoin(char *leftovers, char *buff)
 	char	*str;
 
 	if (!leftovers)
+		leftovers = ft_strdup("");
+	if (!leftovers)
 	{
-		leftovers = (char *)malloc(1 * sizeof(char));
-		leftovers[0] = '\0';
-	}
-	if (!leftovers || !buff)
+		free(buff);
 		return (NULL);
+	}
 	str = malloc(sizeof(char) * ((ft_strlen(leftovers) + ft_strlen(buff)) + 1));
 	if (!str)
+	{
+		free(buff);
 		return (NULL);
+	}
 	i = -1;
 	j = 0;
 	if (leftovers)
@@ -121,5 +124,6 @@ char	*ft_leftovers(char *leftovers)
 		str[j++] = leftovers[i++];
 	str[j] = '\0';
 	free(leftovers);
+	leftovers = NULL;
 	return (str);
 }
