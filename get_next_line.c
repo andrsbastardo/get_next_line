@@ -6,7 +6,7 @@
 /*   By: abastard <abastard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 10:12:14 by ajordan-          #+#    #+#             */
-/*   Updated: 2024/04/27 15:27:58 by abastard         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:29:41 by abastard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_read(int fd, char *text)
 	char	*buff;
 	int		rd_bytes;
 
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char)); //El error esta aqui
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (NULL);
 	rd_bytes = 1;

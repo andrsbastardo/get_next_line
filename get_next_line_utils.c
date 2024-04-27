@@ -6,7 +6,7 @@
 /*   By: abastard <abastard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 10:12:58 by ajordan-          #+#    #+#             */
-/*   Updated: 2024/04/27 15:13:07 by abastard         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:31:20 by abastard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strchr(char *s, int c)
 		return ((char *)&s[ft_strlen(s)]);
 	while (s[i] != '\0')
 	{
-		if (s[i] == (char) c)
+		if (s[i] == (char)c)
 			return ((char *)&s[i]);
 		i++;
 	}
@@ -57,10 +57,7 @@ char	*ft_strjoin(char *leftovers, char *buff)
 	}
 	str = malloc(sizeof(char) * ((ft_strlen(leftovers) + ft_strlen(buff)) + 1));
 	if (!str)
-	{
-		free(buff);
 		return (NULL);
-	}
 	i = -1;
 	j = 0;
 	if (leftovers)
@@ -83,7 +80,7 @@ char	*ft_get_line(char *leftovers)
 		return (NULL);
 	while (leftovers[i] && leftovers[i] != '\n')
 		i++;
-	str = (char *)malloc(sizeof(char) * (i + 2)); //El error esta aqui
+	str = (char *)malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
